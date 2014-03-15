@@ -100,7 +100,7 @@ static int at32_cpufreq_driver_init(struct cpufreq_policy *policy)
 
 	retval = cpufreq_table_validate_and_show(policy, freq_table);
 	if (!retval) {
-		printk("cpufreq: AT32AP CPU frequency driver\n");
+		pr_info("cpufreq: AT32AP CPU frequency driver\n");
 		return 0;
 	}
 
