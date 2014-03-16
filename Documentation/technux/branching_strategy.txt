@@ -1,0 +1,72 @@
+Branching strategy
+=================================
+
+This document describes the overall branching strategy for technux
+kernel branches.
+
+Branches
+=================================
+* master
+* technux
+* technux-dev
+
+master
+=================================
+The only purpose with master is to be able to track and merge from:
+https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/
+
+!!! __NEVER__ push any changes to this branch !!!
+
+It should always be possible to run:
+
+$git pull --ff-only
+
+from master, to cleanly apply latest changes.
+
+      A---B---C master
+     /
+D---E---F---G linux-upstream
+
+technux-dev
+=================================
+Experimental branch.
+
+All changes must go through this branch before reaching technux and
+(eventually) kernel.org.
+
+This branch will be merged into technux when it's assumed to be stable.
+
+technux-dev will merge changes from master in cycles, to ensure that it
+contains the latest changes from linux-upstream.
+
+      A---B---C technux-dev
+     /
+D---E---F---G master
+
+technux
+=================================
+Stable branch.
+
+When a commit has been tested and has existed in dev-branch for a while, it will
+be merged into this branch.
+
+This branch will only contain commits merged from dev-branch.
+
+      A---B---C technux
+     /
+D---E---F---G technux-dev
+
+General branching rules
+=================================
+
+* Using '$ git rebase' is strictly forbidden for public branches.
+  - It might result in rewritten history
+* Use '$git merge --no-ff' when merging between branches.
+
+o---o---o---o linux-upstream (only visual)
+     \
+      o---o---o master
+           \
+            o---o---o technux-dev
+                 \
+                  o---o---o technux
